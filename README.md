@@ -47,7 +47,7 @@ Your application should now be running on [http://localhost:5000](http://localho
 
 ## Deployment
 
-* This application is deployed on Vercel. You can access the live version here: [ADMIN-DASHBOARD](https://tune-house.vercel.app)
+* This application is deployed on Vercel. You can access the live version here: [ADMIN-DASHBOARD](https://dashboard-one-beryl-65.vercel.app/)
 
 ## Contact
 
