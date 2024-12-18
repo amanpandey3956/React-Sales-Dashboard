@@ -1,70 +1,58 @@
-# Getting Started with Create React App
+# React Admin Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a responsive and interactive admin dashboard built using React and Material UI. It showcases various sales-related metrics with dynamic data handling, animations, and real-time updates.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Dashboard Layout**: A professional and modern design featuring:
+  - Total Sales
+  - Sales Distribution by Platforms
+  - Revenue Updates
+  - Yearly Sales Comparison
+  - Active User Tracking
+  - Payment Gateway Statistics
+- **Responsiveness**: Optimized for desktops, tablets, and smartphones.
+- **Dynamic Data Handling**: Fetches and displays real-time data using a mock API.
+- **Interactive Charts**: Visualizations created with `@nivo` and `chart.js`.
+- **UX Enhancements**: Includes animations for better user experience.
+- **Performance Optimization**: Lazy loading, memoization, and code-splitting techniques.
 
-### `npm start`
+## Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Frontend**: React (CRA - Create React App)
+- **UI Framework**: Material UI
+- **Charting Libraries**:
+  - `@nivo` for bar, line, pie, and geo charts
+  - `chart.js` for detailed visualizations
+- **Form Management**: Formik + Yup
+- **Data Fetching**: Axios
+- **Animations**: Framer Motion and Material UI's transition APIs
+- **Mock API**: JSONPlaceholder for simulating dynamic data
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Getting Started
 
-### `npm test`
+Make sure you have Node.js installed. You can download it from [nodejs.org](nodejs.org).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Installation
 
-### `npm run build`
+1. Clone the repository: `git clone https://github.com/amanpandey3956/react-admin-dashboard.git`.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Navigate to the project directory: `cd react-admin-dashboard`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Install the dependencies: `npm install or yarn install`.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+5. Start the development server: `npm run start`.
 
-### `npm run eject`
+Your application should now be running on [http://localhost:5000](http://localhost:5000).
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Deployment
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* This application is deployed on Vercel. You can access the live version here: [ADMIN-DASHBOARD](https://tune-house.vercel.app)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Contact
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+For queries or support, please email: [amanpandey39563@gmail.com](mailto:amanpandey39563@gmail.com).
 
-## Learn More
+## Connect with Me
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- My [Links for Socials](https://linktr.ee/Aman.Pandey).
