@@ -14,29 +14,49 @@ const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  // State for dynamic transactions
+  // States for dynamic data
   const [transactions, setTransactions] = useState([]);
+  const [activeUsers, setActiveUsers] = useState([]);
+  const [totalActiveUsers, setTotalActiveUsers] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  // Fetch transactions dynamically
+  // Fetch Transactions and Active Users
   useEffect(() => {
-    const fetchTransactions = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get("https://jsonplaceholder.typicode.com/posts");
-        const formattedData = response.data.slice(0, 10).map((post, index) => ({
+        // Fetch transactions dynamically
+        const transactionsResponse = await axios.get("https://jsonplaceholder.typicode.com/posts");
+        const formattedTransactions = transactionsResponse.data.slice(0, 10).map((post, index) => ({
           txId: `TX${index + 1}`,
-          user: post.title.substring(0, 10), // Simulated user name
-          date: new Date().toISOString().split("T")[0], // Simulated current date
-          cost: (Math.random() * 100).toFixed(2), // Simulated cost
+          user: post.title.substring(0, 10),
+          date: new Date().toISOString().split("T")[0],
+          cost: (Math.random() * 100).toFixed(2),
         }));
-        setTransactions(formattedData);
+        setTransactions(formattedTransactions);
+
+        // Fetch active users data
+        const activeUsersData = [
+          { id: "AFG", value: 520600 },
+          { id: "USA", value: 658725 },
+          { id: "IND", value: 549818 },
+          { id: "BRA", value: 432239 },
+          { id: "CHN", value: 593604 },
+          { id: "RUS", value: 268735 },
+          { id: "ZAF", value: 836949 },
+        ];
+        const totalUsers = activeUsersData.reduce((sum, user) => sum + user.value, 0);
+
+        setActiveUsers(activeUsersData);
+        setTotalActiveUsers(totalUsers);
+
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching transactions:", error);
+        console.error("Error fetching data:", error);
         setLoading(false);
       }
     };
-    fetchTransactions();
+
+    fetchData();
   }, []);
 
   return (
@@ -62,18 +82,18 @@ const Dashboard = () => {
 
       {/* GRID & CHARTS */}
       <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px">
-        {/* ROW 1 */}
+        {/* ROW 1 - Stat Boxes */}
         <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
           <StatBox title="$34,343.00" subtitle="Total Sales" progress="0.75" increase="+14%" />
         </Box>
         <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
-          <StatBox title="$4.5k" subtitle="By Website" progress="0.50" increase="+21%"/>
+          <StatBox title="$4.5k" subtitle="By Website" progress="0.50" increase="+21%" />
         </Box>
         <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
-          <StatBox title="$2.8K" subtitle="By Mobile" progress="0.30" increase="+5%"/>
+          <StatBox title="$2.8K" subtitle="By Mobile" progress="0.30" increase="+5%" />
         </Box>
         <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
-          <StatBox title="$2.2k" subtitle="By Agent" progress="0.80" increase="+43%"/>
+          <StatBox title="$2.2k" subtitle="By Agent" progress="0.80" increase="+43%" />
         </Box>
 
         {/* ROW 2 */}
@@ -120,16 +140,38 @@ const Dashboard = () => {
           </Box>
         </Box>
 
-        {/* ROW 3 */}
+        {/* ROW 3 - Active Users */}
         <Box gridColumn="span 8" gridRow="span 2" backgroundColor={colors.primary[400]} padding="30px">
-          <Typography variant="h5" fontWeight="600" sx={{ marginBottom: "15px" }}>
-            Active Users
-          </Typography>
-          <Box height="250px" m="-20px 0 0 0">
-            <GeographyChart isDashboard={true} />
+          <Box display="flex" justifyContent="space-between" mb="20px">
+            <Box>
+              <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
+                Active Users
+              </Typography>
+              <Typography variant="h6" color={colors.greenAccent[500]}>
+                8.06% vs Previous Month
+              </Typography>
+            </Box>
+            <Box>
+              <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
+                Total Active Users
+              </Typography>
+              <Typography variant="h6" color={colors.greenAccent[500]}>
+                {totalActiveUsers.toLocaleString()}
+              </Typography>
+            </Box>
+          </Box>
+          <Box height="200px" m="-20px 0 0 0">
+            {loading ? (
+              <Typography variant="h6" color={colors.grey[300]} textAlign="center">
+                Loading Active Users...
+              </Typography>
+            ) : (
+              <GeographyChart isDashboard={true} data={activeUsers} />
+            )}
           </Box>
         </Box>
-  
+
+        {/* Recent Transactions */}
         <Box gridColumn="span 4" gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
           <Box display="flex" justifyContent="space-between" alignItems="center" borderBottom={`4px solid ${colors.primary[500]}`} p="15px">
             <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
