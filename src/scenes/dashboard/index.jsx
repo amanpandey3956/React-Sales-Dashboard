@@ -18,7 +18,8 @@ const Dashboard = () => {
   const [transactions, setTransactions] = useState([]);
   const [activeUsers, setActiveUsers] = useState([]);
   const [totalActiveUsers, setTotalActiveUsers] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [loadingTransactions, setLoadingTransactions] = useState(true);
+  const [loadingActiveUsers, setLoadingActiveUsers] = useState(true);
 
   // Fetch Transactions and Active Users
   useEffect(() => {
@@ -33,26 +34,23 @@ const Dashboard = () => {
           cost: (Math.random() * 100).toFixed(2),
         }));
         setTransactions(formattedTransactions);
+        setLoadingTransactions(false);
 
-        // Fetch active users data
-        const activeUsersData = [
-          { id: "AFG", value: 520600 },
-          { id: "USA", value: 658725 },
-          { id: "IND", value: 549818 },
-          { id: "BRA", value: 432239 },
-          { id: "CHN", value: 593604 },
-          { id: "RUS", value: 268735 },
-          { id: "ZAF", value: 836949 },
-        ];
+        // Fetch active users data dynamically
+        const usersResponse = await axios.get("https://jsonplaceholder.typicode.com/users");
+        const activeUsersData = usersResponse.data.slice(0, 7).map((user, index) => ({
+          id: ["AFG", "USA", "IND", "BRA", "CHN", "RUS", "ZAF"][index],
+          value: Math.floor(Math.random() * 1000000), // Simulated active user count
+        }));
         const totalUsers = activeUsersData.reduce((sum, user) => sum + user.value, 0);
 
         setActiveUsers(activeUsersData);
         setTotalActiveUsers(totalUsers);
-
-        setLoading(false);
+        setLoadingActiveUsers(false);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setLoading(false);
+        setLoadingTransactions(false);
+        setLoadingActiveUsers(false);
       }
     };
 
@@ -161,7 +159,7 @@ const Dashboard = () => {
             </Box>
           </Box>
           <Box height="200px" m="-20px 0 0 0">
-            {loading ? (
+            {loadingActiveUsers ? (
               <Typography variant="h6" color={colors.grey[300]} textAlign="center">
                 Loading Active Users...
               </Typography>
@@ -178,7 +176,7 @@ const Dashboard = () => {
               Recent Transactions
             </Typography>
           </Box>
-          {loading ? (
+          {loadingTransactions ? (
             <Typography variant="h6" color={colors.grey[300]} textAlign="center">
               Loading Transactions...
             </Typography>

@@ -39,7 +39,9 @@ const GeographyChart = ({ isDashboard = false, data }) => {
         },
         tooltip: {
           container: {
-            color: colors.primary[500],
+            backgroundColor: colors.primary[500],
+            color: colors.grey[100],
+            fontSize: "14px",
           },
         },
       }}
