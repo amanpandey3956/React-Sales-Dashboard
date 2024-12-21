@@ -1,4 +1,4 @@
-import { useTheme } from "@mui/material";
+import { useTheme, useMediaQuery } from "@mui/material";
 import { ResponsiveChoropleth } from "@nivo/geo";
 import { geoFeatures } from "../data/mockGeoFeatures";
 import { tokens } from "../theme";
@@ -6,10 +6,11 @@ import { tokens } from "../theme";
 const GeographyChart = ({ isDashboard = false, data }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <ResponsiveChoropleth
-      data={data} // Dynamic data passed as props
+      data={data}
       theme={{
         axis: {
           domain: {
@@ -39,21 +40,21 @@ const GeographyChart = ({ isDashboard = false, data }) => {
         },
         tooltip: {
           container: {
-            backgroundColor: colors.primary[500],
-            color: colors.grey[100],
-            fontSize: "14px",
+            color: colors.primary[500],
           },
         },
       }}
       features={geoFeatures.features}
       margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-      domain={[0, 1000000]} // Adjust domain for better visualization
-      unknownColor="#666666" // Color for countries without data
+      domain={[0, 1000000]}
+      unknownColor="#666666"
       label="properties.name"
-      valueFormat=".2s" // Format values (e.g., 1.2k)
-      projectionScale={isDashboard ? 40 : 150} // Adjust map scale for dashboard
-      projectionTranslation={isDashboard ? [0.49, 0.6] : [0.5, 0.5]} // Map positioning
-      projectionRotation={[0, 0, 0]} // No rotation
+      valueFormat=".2s"
+      projectionScale={isSmallScreen ? 20 : isDashboard ? 40 : 150}
+      projectionTranslation={
+        isSmallScreen ? [0.5, 0.7] : isDashboard ? [0.49, 0.6] : [0.5, 0.5]
+      }
+      projectionRotation={[0, 0, 0]}
       borderWidth={1.5}
       borderColor="#ffffff"
       legends={

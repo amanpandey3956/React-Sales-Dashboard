@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, Button, IconButton, Typography, useTheme, useMediaQuery } from "@mui/material";
 import { tokens } from "../../theme";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import Header from "../../components/Header";
@@ -13,6 +13,7 @@ import axios from "axios";
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   // States for dynamic data
   const [transactions, setTransactions] = useState([]);
@@ -58,18 +59,18 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <Box m="20px">
+    <Box m={isSmallScreen ? "10px" : "20px"}>
       {/* HEADER */}
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box display="flex" flexDirection={isSmallScreen ? "column" : "row"} justifyContent="space-between" alignItems="center">
         <Header title="Sales Distribution" subtitle="This is all over Platform Sales Generated" />
-        <Box>
+        <Box mt={isSmallScreen ? "10px" : "0"}>
           <Button
             sx={{
               backgroundColor: colors.blueAccent[700],
               color: colors.grey[100],
-              fontSize: "14px",
+              fontSize: isSmallScreen ? "12px" : "14px",
               fontWeight: "bold",
-              padding: "10px 20px",
+              padding: isSmallScreen ? "8px 15px" : "10px 20px",
             }}
           >
             <DownloadOutlinedIcon sx={{ mr: "10px" }} />
@@ -79,23 +80,41 @@ const Dashboard = () => {
       </Box>
 
       {/* GRID & CHARTS */}
-      <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px">
+      <Box
+        display="grid"
+        gridTemplateColumns={isSmallScreen ? "1fr" : "repeat(12, 1fr)"}
+        gridAutoRows="140px"
+        gap="20px"
+      >
         {/* ROW 1 - Stat Boxes */}
-        <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
-          <StatBox title="$34,343.00" subtitle="Total Sales" progress="0.75" increase="+14%" />
-        </Box>
-        <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
-          <StatBox title="$4.5k" subtitle="By Website" progress="0.50" increase="+21%" />
-        </Box>
-        <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
-          <StatBox title="$2.8K" subtitle="By Mobile" progress="0.30" increase="+5%" />
-        </Box>
-        <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
-          <StatBox title="$2.2k" subtitle="By Agent" progress="0.80" increase="+43%" />
-        </Box>
+        {[{
+          title: "$34,343.00", subtitle: "Total Sales", progress: "0.75", increase: "+14%",
+        }, {
+          title: "$4.5k", subtitle: "By Website", progress: "0.50", increase: "+21%",
+        }, {
+          title: "$2.8K", subtitle: "By Mobile", progress: "0.30", increase: "+5%",
+        }, {
+          title: "$2.2k", subtitle: "By Agent", progress: "0.80", increase: "+43%",
+        }].map((stat, i) => (
+          <Box
+            key={i}
+            gridColumn={isSmallScreen ? "span 12" : "span 3"}
+            backgroundColor={colors.primary[400]}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <StatBox {...stat} />
+          </Box>
+        ))}
 
         {/* ROW 2 */}
-        <Box gridColumn="span 4" gridRow="span 2" backgroundColor={colors.primary[400]} p="30px">
+        <Box
+          gridColumn={isSmallScreen ? "span 12" : "span 4"}
+          gridRow="span 2"
+          backgroundColor={colors.primary[400]}
+          p="30px"
+        >
           <Typography variant="h5" fontWeight="600">
             Campaign
           </Typography>
@@ -108,7 +127,11 @@ const Dashboard = () => {
           </Box>
         </Box>
 
-        <Box gridColumn="span 4" gridRow="span 2" backgroundColor={colors.primary[400]}>
+        <Box
+          gridColumn={isSmallScreen ? "span 12" : "span 4"}
+          gridRow="span 2"
+          backgroundColor={colors.primary[400]}
+        >
           <Typography variant="h5" fontWeight="600" sx={{ padding: "30px 30px 0 30px" }}>
             Sales Quantity
           </Typography>
@@ -117,7 +140,11 @@ const Dashboard = () => {
           </Box>
         </Box>
 
-        <Box gridColumn="span 4" gridRow="span 2" backgroundColor={colors.primary[400]}>
+        <Box
+          gridColumn={isSmallScreen ? "span 12" : "span 4"}
+          gridRow="span 2"
+          backgroundColor={colors.primary[400]}
+        >
           <Box mt="25px" p="0 30px" display="flex" justifyContent="space-between" alignItems="center">
             <Box>
               <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
@@ -139,7 +166,12 @@ const Dashboard = () => {
         </Box>
 
         {/* ROW 3 - Active Users */}
-        <Box gridColumn="span 8" gridRow="span 2" backgroundColor={colors.primary[400]} padding="30px">
+        <Box
+          gridColumn={isSmallScreen ? "span 12" : "span 8"}
+          gridRow="span 2"
+          backgroundColor={colors.primary[400]}
+          padding="30px"
+        >
           <Box display="flex" justifyContent="space-between" mb="20px">
             <Box>
               <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
@@ -170,7 +202,12 @@ const Dashboard = () => {
         </Box>
 
         {/* Recent Transactions */}
-        <Box gridColumn="span 4" gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
+        <Box
+          gridColumn={isSmallScreen ? "span 12" : "span 4"}
+          gridRow="span 2"
+          backgroundColor={colors.primary[400]}
+          overflow="auto"
+        >
           <Box display="flex" justifyContent="space-between" alignItems="center" borderBottom={`4px solid ${colors.primary[500]}`} p="15px">
             <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
               Recent Transactions
